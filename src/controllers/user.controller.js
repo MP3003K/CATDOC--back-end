@@ -4,7 +4,7 @@ const helpers = require('../libs/helpers');
 
 export const readAllUsers = async(req, res)=>{
     try {
-        const response = await pool.query('select *from Usuario');
+        const response = await pool.query('select * from usuario');
         return res.status(200).json(response.rows);
     } catch (e) {
         console.log(e);
@@ -21,6 +21,8 @@ export const readUser = async(req, res)=>{
         return res.status(500).json('Internal Server error...!');
     }
 }
+
+
 export const delUser = async(req, res)=>{
     try {
         const id = parseInt(req.params.id);

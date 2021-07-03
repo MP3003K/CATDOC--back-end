@@ -10,6 +10,4 @@ router.get('/:id' , checkToken, userCtr.readUser);
 router.delete('/:id' ,checkToken, userCtr.delUser);
 router.post('/add' ,checkToken, userCtr.createUser);
 router.put('/:id' ,checkToken, userCtr.updateUser);
-
-
 export default router;

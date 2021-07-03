@@ -1,9 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
 import authRoutes from './routes/auth.routes'
-import detalleRoutes from './routes/detalle.routes'
 import userRoutes from './routes/user.routes'
-import matriculaRoutes from './routes/matricula.routes'
+import cu2 from './routes/cu2.router'
 const app = express();
 var cors = require('cors');
 
@@ -17,7 +16,5 @@ app.get('/',function(req, res, next){
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/auth/users', userRoutes);
-app.use('/api/auth/matricula' , matriculaRoutes);
-app.use('/api/auth/detalle' , detalleRoutes);
-
+app.use('/gest_usu_part', cu2);
 export default app;
