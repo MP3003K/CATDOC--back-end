@@ -16,5 +16,5 @@ app.get('/',function(req, res, next){
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/auth/users', userRoutes);
-app.use('/gest_usu_part', cu2);
+app.use('/iteracion1/gest_usu_part', cu2);
 export default app;
