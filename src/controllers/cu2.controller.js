@@ -14,7 +14,19 @@ export const crearUsuarioParticipante = async(req, res)=>{
     }
 }
 
-
+export const updateDocenteEvaluador = async(req, res)=>{
+    try {
+        const idusuario = parseInt(req.params.id);
+        const{ nombres, apellidos, dni, celular, telefono_fijo, correo, cat_actual, idsede, idfacultad, idcargo} = req.body;
+        await pool.query('update docente set nombres = $1, apellidos = $2, dni = $3, celular = $4, telefono_fijo = $5, correo = $6, cat_actual = $7 where idsede = $8 where idfacultad = $9 where idcargo = $10', [nombres, apellidos, dni, celular, telefono_fijo, correo, cat_actual, idsede, idfacultad, idcargo]);
+        return res.status(200).json(
+            `Docente evaluador modificado correctamente...!` //alt 96
+        );
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal Server Error...!');
+    }
+}
 export const listarDocentesParticipantes = async(req, res)=>{
     try {
         const response = await pool.query('select * from fc_m_listar_docentes_participantes()');
@@ -23,4 +35,18 @@ export const listarDocentesParticipantes = async(req, res)=>{
         console.log(e);
         return res.status(500).json('Internal Server error...!');
     }
+}
+
+export const eliminar_user_log = async(req, res)=>{
+    try {
+        const idusuario = parseInt(req.params.id);
+        console.log(idusuario);
+        await pool.query('select  fc_m_elim_usu_log($1) ', [idusuario]);
+        return res.status(200).json(
+            `Usuario eliminado correctamente...!`);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal Server error...!');
+    }
+
 }
