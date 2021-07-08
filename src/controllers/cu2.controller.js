@@ -1,11 +1,12 @@
+
 import { pool } from '../database'
 const helpers = require('../libs/helpers');
 
 export const crearUsuarioParticipante = async(req, res)=>{
     try {
-        const{ nombres,apellidos,dni,celular,telefono_fijo,correo ,estado,cat_actual,cat_deceada,password,idrol} = req.body;
+        const{ nombres,apellidos,dni,celular,telefono_fijo,correo ,cat_actual,cat_deceada,password} = req.body;
         const password_cifrado = await helpers.encryptPassword(password);
-        await pool.query('select  fc_m_registrar_docente_participante($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ', [ nombres,apellidos,dni,celular,telefono_fijo,correo ,estado,cat_actual,cat_deceada,password_cifrado,idrol]);
+        await pool.query('select  fc_m_registrar_docente_participante($1,$2,$3,$4,$5,$6,$7,$8,$9) ', [ nombres,apellidos,dni,celular,telefono_fijo,correo,cat_actual,cat_deceada,password_cifrado]);
         return res.status(200).json(
             `Usuario ${ dni } creado correctamente...!`);
     } catch (e) {
@@ -14,13 +15,14 @@ export const crearUsuarioParticipante = async(req, res)=>{
     }
 }
 
-export const updateDocenteEvaluador = async(req, res)=>{
+export const updateDocenteParticipante = async(req, res)=>{
     try {
         const idusuario = parseInt(req.params.id);
-        const{ nombres, apellidos, dni, celular, telefono_fijo, correo, cat_actual, idsede, idfacultad, idcargo} = req.body;
-        await pool.query('update docente set nombres = $1, apellidos = $2, dni = $3, celular = $4, telefono_fijo = $5, correo = $6, cat_actual = $7 where idsede = $8 where idfacultad = $9 where idcargo = $10', [nombres, apellidos, dni, celular, telefono_fijo, correo, cat_actual, idsede, idfacultad, idcargo]);
+        const{ nombres, apellidos, dni, celular, telefono_fijo, correo, cat_actual, cat_deceada, password} = req.body;
+        const password_cifrado = await helpers.encryptPassword(password);
+        await pool.query('select fc_m_actualizar_docente_participante ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)', [idusuario, nombres, apellidos, dni, celular, telefono_fijo, correo,cat_actual, cat_deceada, password_cifrado]);
         return res.status(200).json(
-            `Docente evaluador modificado correctamente...!` //alt 96
+            `Docente evaluador participante correctamente...!` //alt 96
         );
     } catch (e) {
         console.log(e);
@@ -41,7 +43,7 @@ export const eliminar_user_log = async(req, res)=>{
     try {
         const idusuario = parseInt(req.params.id);
         console.log(idusuario);
-        await pool.query('select  fc_m_elim_usu_log($1) ', [idusuario]);
+  await pool.query('select  fc_m_elim_usu_log($1) ', [idusuario]);
         return res.status(200).json(
             `Usuario eliminado correctamente...!`);
     } catch (e) {
