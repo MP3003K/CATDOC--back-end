@@ -38,11 +38,22 @@ export const listarDocentesParticipantes = async(req, res)=>{
         return res.status(500).json('Internal Server error...!');
     }
 }
+export const listarDocParticipante = async(req, res)=>{
+    try {
+        const idusuario = parseInt(req.params.id);
+        const response = await pool.query('select * from fc_m_list_doc_part_id($1)', [idusuario]);
+        return res.status(200).json(response.rows);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal Server error...!');
+    }
+}
+
 
 export const eliminar_user_log = async(req, res)=>{
     try {
         const idusuario = parseInt(req.params.id);
-        console.log(idusuario);
+        console.log('zz');
   await pool.query('select  fc_m_elim_usu_log($1) ', [idusuario]);
         return res.status(200).json(
             `Usuario eliminado correctamente...!`);
