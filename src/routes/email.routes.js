@@ -4,6 +4,6 @@ const router = Router();
 
 import * as emailCtr from '../controllers/email.controller';
 
-router.post('/', emailCtr.email);
+router.post('/send-mail', emailCtr.email);
 
 export default router;
